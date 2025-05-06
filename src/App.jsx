@@ -1,4 +1,3 @@
-// App.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
@@ -13,6 +12,7 @@ export default function App() {
 
   useEffect(() => {
     fetchWeather(city);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unit]);
 
   function fetchWeather(cityName) {
