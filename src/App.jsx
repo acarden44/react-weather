@@ -127,7 +127,7 @@ export default function App() {
         This project was coded by{" "}
         <a href="https://github.com/acarden44">April Carden</a>, and is{" "}
         <a
-          href="https://github.com/acarden44/Final-Project-Weather-App"
+          href="https://github.com/acarden44/react-weather"
           target="_blank"
           rel="noreferrer"
         >
