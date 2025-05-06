@@ -135,7 +135,7 @@ export default function App() {
         </a>
         , and{" "}
         <a
-          href="https://cardenweatherapp.netlify.app/"
+          href="https://aprilsreactweatherapp.netlify.app/"
           target="_blank"
           rel="noreferrer"
         >
