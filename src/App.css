@@ -6,6 +6,11 @@ body {
   color: #333;
 }
 
+h2 {
+  font-size: 38px;
+  font-weight: 700;
+}
+
 /* App Container */
 .App {
   display: flex;
@@ -20,7 +25,7 @@ body {
   margin-bottom: 30px;
 }
 .app-header h1 {
-  font-size: 26px;
+  font-size: 38px;
   font-weight: 700;
   color: #6a0dad;
 }
@@ -81,24 +86,60 @@ body {
   background-color: #d9436d;
 }
 
-/* Weather Info */
-.weather-app-temp-container {
+/* Weather Info Layout */
+.info-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px 0;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.left-column {
+  flex: 1;
+  min-width: 200px;
+}
+
+.right-column {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 20px;
+  justify-content: flex-end;
+  gap: 14px; /* Added spacing between icon and temp */
 }
+
+/* Weather Info Text */
+.weather-info-text p {
+  margin: 6px 0;
+}
+
+.weather-highlight {
+  color: #f65282;
+  font-weight: bold;
+}
+
+/* Weather Icon and Temperature */
 .weather-app-temp {
-  font-size: 48px;
+  font-size: 88px;
   font-weight: 700;
 }
+
 .weather-app-unit {
   font-size: 24px;
   margin-left: 4px;
 }
+
 .weather-app-icon {
   width: 64px;
   height: 64px;
+}
+
+.weather-app-temp-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 /* Forecast Layout */
@@ -107,15 +148,18 @@ body {
   justify-content: space-between;
   margin-top: 30px;
 }
+
 .weather-forecast-day {
   text-align: center;
   color: #f65282;
 }
+
 .weather-forecast-date {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.6);
   margin-bottom: 8px;
 }
+
 .weather-forecast-temps {
   display: flex;
   justify-content: center;
@@ -129,35 +173,12 @@ footer {
   margin-top: 30px;
   color: rgba(0, 0, 0, 0.5);
 }
+
 footer a {
   color: #6a0dad;
   text-decoration: none;
 }
+
 footer a:hover {
   text-decoration: underline;
-}
-
-.weather-today {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 30px 0;
-}
-
-.weather-info-text {
-  flex: 1;
-}
-
-.weather-info-temp {
-  text-align: right;
-  flex: 1;
-}
-
-.weather-info-text p {
-  margin: 6px 0;
-}
-
-.weather-highlight {
-  color: #f65282;
-  font-weight: bold;
 }
