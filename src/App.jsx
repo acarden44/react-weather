@@ -85,7 +85,7 @@ export default function App() {
               Switch to {unit === "imperial" ? "°C" : "°F"}
             </button>
           </div>
-          <div className="weather-today two-column-layout">
+          <div className="weather-today">
             <WeatherInfo data={weatherData} unit={unit} />
           </div>
           <WeatherForecast

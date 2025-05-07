@@ -92,8 +92,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   margin: 40px 0;
-  gap: 40px;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
 .left-column {
@@ -102,11 +101,10 @@ h2 {
 }
 
 .right-column {
-  flex: 0 1 200px;
   display: flex;
-  align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  align-items: center;
+  flex-grow: 1;
 }
 
 /* Weather Info Text */
@@ -120,6 +118,13 @@ h2 {
 }
 
 /* Weather Icon and Temperature */
+.weather-app-temp-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
 .weather-app-temp {
   font-size: 88px;
   font-weight: 700;
@@ -130,16 +135,13 @@ h2 {
   margin-left: 4px;
 }
 
-.weather-app-icon {
-  width: 64px;
-  height: 64px;
+.weather-highlight {
+  color: #f65282;
+  font-weight: bold;
 }
 
-.weather-app-temp-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
+.weather-description {
+  text-transform: capitalize;
 }
 
 /* Forecast Layout */

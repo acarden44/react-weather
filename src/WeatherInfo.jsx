@@ -4,26 +4,23 @@ import WeatherIcon from "./WeatherIcon";
 
 export default function WeatherInfo({ data, unit }) {
   return (
-    <>
+    <div className="info-layout">
       <div className="left-column">
         <h2>{data.city}</h2>
         <p>
-          <FormattedDate date={data.time} />
-          <br />
-          Humidity:{" "}
+          <FormattedDate date={data.time} />,{" "}
+          <span className="weather-description">{data.description}</span>
+        </p>
+        <p>
+          Humidity: <span className="weather-highlight">{data.humidity}%</span>,
+          Wind:{" "}
           <span className="weather-highlight">
-            <strong>{data.humidity}%</strong>
-          </span>
-          , Wind:{" "}
-          <span className="weather-highlight">
-            <strong>
-              {Math.round(data.wind)} {unit === "imperial" ? "mph" : "kph"}
-            </strong>
+            {Math.round(data.wind)} {unit === "imperial" ? "mph" : "kph"}
           </span>
         </p>
       </div>
       <div className="right-column">
-        <div className="weather-app-temp-container">
+        <div className="weather-app-temp-row">
           <WeatherIcon
             code={data.icon.split("/").pop().replace(".png", "")}
             size={64}
@@ -36,6 +33,6 @@ export default function WeatherInfo({ data, unit }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
