@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import WeatherInfo from "./WeatherInfo";
 import WeatherForecast from "./WeatherForecast";
 import axios from "axios";
@@ -8,47 +8,56 @@ const API_KEY = "3b34c40446ftcf4f07e329o00aa2e010";
 
 export default function App() {
   const [weatherData, setWeatherData] = useState({ ready: false });
+  const [forecastData, setForecastData] = useState([]);
   const [city, setCity] = useState("Grand Rapids");
   const [unit, setUnit] = useState("imperial");
 
-  const handleResponse = (response) => {
-    const daily = response.data.daily?.[0] || {};
+  function handleCurrentResponse(response) {
+    const data = response.data;
+    const localTime = new Date(data.time * 1000);
+
     setWeatherData({
       ready: true,
-      coordinates: response.data.coordinates,
-      temperature: daily.temperature?.day || 0,
-      humidity: daily.temperature?.humidity || 0,
-      date: new Date(daily.time * 1000),
-      description: daily.condition?.description || "",
-      icon: daily.condition?.icon_url || "",
-      wind: daily.wind?.speed || 0,
-      city: response.data.city,
+      coordinates: data.coordinates,
+      temperature: data.temperature.current,
+      humidity: data.temperature.humidity,
+      description: data.condition.description,
+      icon: data.condition.icon_url,
+      wind: data.wind.speed,
+      city: data.city,
+      time: localTime,
     });
-  };
+  }
 
-  const search = useCallback(() => {
-    const apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${API_KEY}&units=${unit}`;
-    axios.get(apiUrl).then(handleResponse);
-  }, [city, unit]);
+  function handleForecastResponse(response) {
+    setForecastData(response.data.daily || []);
+  }
 
-  useEffect(() => {
-    if (weatherData.ready) {
-      search();
-    }
-  }, [search, weatherData.ready]);
+  function search() {
+    const currentUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${API_KEY}&units=${unit}`;
+    axios.get(currentUrl).then(handleCurrentResponse);
 
-  const handleSubmit = (event) => {
+    const forecastUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${API_KEY}&units=${unit}`;
+    axios.get(forecastUrl).then(handleForecastResponse);
+  }
+
+  function handleSubmit(event) {
     event.preventDefault();
     search();
-  };
+  }
 
-  const toggleUnits = () => {
+  function toggleUnits() {
     setUnit((prevUnit) => (prevUnit === "imperial" ? "metric" : "imperial"));
-  };
+  }
 
-  const handleCityChange = (event) => {
+  function handleCityChange(event) {
     setCity(event.target.value);
-  };
+  }
+
+  useEffect(() => {
+    search();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [unit]);
 
   if (weatherData.ready) {
     return (
@@ -79,7 +88,11 @@ export default function App() {
           <div className="weather-today two-column-layout">
             <WeatherInfo data={weatherData} unit={unit} />
           </div>
-          <WeatherForecast coordinates={weatherData.coordinates} unit={unit} />
+          <WeatherForecast
+            coordinates={weatherData.coordinates}
+            unit={unit}
+            forecast={forecastData}
+          />
           <footer>
             Built by <a href="https://github.com/acarden44">April Carden</a>,
             open-sourced on{" "}
@@ -91,7 +104,6 @@ export default function App() {
       </div>
     );
   } else {
-    search();
     return "Loading...";
   }
 }
