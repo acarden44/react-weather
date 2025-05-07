@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import WeatherInfo from "./WeatherInfo";
 import WeatherForecast from "./WeatherForecast";
 import axios from "axios";
@@ -11,7 +11,7 @@ export default function App() {
   const [city, setCity] = useState("Grand Rapids");
   const [unit, setUnit] = useState("imperial");
 
-  function handleResponse(response) {
+  const handleResponse = (response) => {
     const daily = response.data.daily?.[0] || {};
     setWeatherData({
       ready: true,
@@ -24,31 +24,31 @@ export default function App() {
       wind: daily.wind?.speed || 0,
       city: response.data.city,
     });
-  }
+  };
 
-  function search() {
-    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${API_KEY}&units=${unit}`;
+  const search = useCallback(() => {
+    const apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${API_KEY}&units=${unit}`;
     axios.get(apiUrl).then(handleResponse);
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    search();
-  }
-
-  function toggleUnits() {
-    setUnit((prevUnit) => (prevUnit === "imperial" ? "metric" : "imperial"));
-  }
-
-  function handleCityChange(event) {
-    setCity(event.target.value);
-  }
+  }, [city, unit]);
 
   useEffect(() => {
     if (weatherData.ready) {
       search();
     }
-  }, [unit]);
+  }, [search, weatherData.ready]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    search();
+  };
+
+  const toggleUnits = () => {
+    setUnit((prevUnit) => (prevUnit === "imperial" ? "metric" : "imperial"));
+  };
+
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  };
 
   if (weatherData.ready) {
     return (
