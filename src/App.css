@@ -139,6 +139,25 @@ footer a:hover {
 
 .weather-today {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.weather-info-text {
+  flex: 1;
+}
+
+.weather-info-temp {
+  text-align: right;
+  flex: 1;
+}
+
+.weather-info-text p {
+  margin: 6px 0;
+}
+
+.weather-highlight {
+  color: #f65282;
+  font-weight: bold;
 }
